@@ -1,0 +1,44 @@
+composer install --prefer-source
+ C:\Users\Maaz-05\Documents\mvp_estate\map> composer create-project laravel/laravel map --prefer-source
+
+
+composer require spatie/laravel-permission
+ php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider"
+
+ composer require filament/filament
+php artisan filament:install --panels
+php artisan migrate
+
+
+
+//optional spate permssiison with filamner
+composer require bezhansalleh/filament-shield
+php artisan shield:install
+
+
+php artisan make:seeder RolePermissionSeeder
+php artisan migrate
+php artisan db:seed --class=RolePermissionSeeder
+
+php artisan migrate:fresh --seed
+
+
+$user1 = User::firstOrCreate(
+            ['email' => 'admin@example.com'],
+            [
+                'name' => 'Admin User',
+                'password' => Hash::make('password123'),
+            ]
+        );
+        $user1->assignRole('admin');
+
+        // User 2 (Regular User or another role)
+        $user2 = User::firstOrCreate(
+            ['email' => 'user2@example.com'],
+            [
+                'name' => 'Second User',
+                'password' => Hash::make('password123'),
+            ]
+        );
+
+         $user2->assignRole('dealer');
